@@ -15,7 +15,7 @@ const touristPlaces = [
     price: 900,
     location: "Rajasthan, India",
     rating: 4.7,
-    img: "https://images.unsplash.com/photo-1583241804-28b34409c855",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfUaGhdZF6El6JJ1WxsHO2kJmBHaDi6HYEPw&s",
     desc:
       "Jaipur, famously known as the Pink City, is a vibrant blend of royal history, majestic forts, and traditional Rajasthani culture. The city is dotted with architectural wonders such as Hawa Mahal, Amer Fort, City Palace, and Jantar Mantar. Its bustling markets are full of handicrafts, jewelry, and colorful fabrics. Visitors enjoy exploring its narrow streets, savoring authentic Rajasthani cuisine, and experiencing the warmth of local hospitality, making it a perfect cultural destination."
   },
