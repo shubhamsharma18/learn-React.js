@@ -1,7 +1,7 @@
 import { useState } from "react"
 import data1 from "./data"
 
-function Card({id,name,price,desc,imgsrc,remove}){
+function Card({id,name,price,desc,img,remove}){
 
 
     function trimfun(desc,limit){
@@ -22,8 +22,8 @@ function readmore(){
     <>
     <div className="bg-pink-900  w-[400px] object-cover flex mt-5 flex-col justify-between rounded-2xl">
 
-        <div  className=" h-[300px] w-full overflow-hidden">
-            <img  className="h-full w-full object-cover  object-center rounded-t-2xl" src={imgsrc} alt="no" />
+        <div  className=" h-[250px] w-full overflow-hidden">
+            <img  className="h-full w-full object-cover  object-center rounded-t-2xl" src={img} alt="no" />
         </div>
 
         <div className="px-2 py-2 flex flex-col gap-2">

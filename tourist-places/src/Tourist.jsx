@@ -33,7 +33,7 @@ setShow(true)
             tours.map((tour)=>{
                 return(
                     <>
-                  <Card  remove={remove} key={tour.id}  id={tour.id} name={tour.name} price={tour.price} desc={tour.desc} imgsrc={tour.img}/>
+                  <Card  key={tour.id} {...tour} remove={remove} />
                   
                    
                      </>
@@ -48,8 +48,10 @@ setShow(true)
 
         {
             show && 
-        <button className="bg-red-600" onClick={refresh}>Refresh</button>
-        }
+           <div  className="flex m-auto mt-40 flex-col items-center justify-center gap-3">
+            <span>Refresh to view Places</span>
+        <button className="bg-red-600 w-max px-2 py-2 rounded-lg" onClick={refresh}>Refresh</button>
+        </div>}
         </div>
        
      
