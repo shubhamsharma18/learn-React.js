@@ -8,138 +8,52 @@ import { useEffect } from 'react'
 import ViewCart from './ViewCart'
 function App() {
   // const [count, setCount] = useState(0)
-  const [cart, setCart] = useState([])
+const [cart, setCart] = useState([])
   const [bill, setBill] = useState(0);
   const [showCart, setShowCart] = useState(false);
-  // const [showbtn,setShowBtn]=useState(false)
-  //  const [cheese,setCheese]=useState(false)
-
-
-
 
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    // const savedCheese = localStorage.getItem("cheese");
-
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-    //    if (savedCheese) {
-    //   setCheese(JSON.parse(savedCheese));
-    // }
+    // const savedCart = localStorage.getItem("cart");
+    // if (savedCart) setCart(JSON.parse(savedCart));
+    localStorage.removeItem(cart)
   }, []);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-    // localStorage.setItem("cheese", JSON.stringify(cheese));
-  }, [cart]);
-
-  useEffect(() => {
-
-
-
-    const total = cart.reduce((sum, item) => {
-
-      const price = Number(item.price) || 0;
-      const qty = Number(item.qty) || 0;
-
-      const base = price * qty;
-      const cheese = item.cheese ? 20 * qty : 0;
-
-      return sum + base + cheese;
-
-    }, 0);
-
+    // Bill update
+    const total = cart.reduce((sum, item) => sum + (item.price * item.qty) + (item.cheese ? 20 * item.qty : 0), 0);
     setBill(total);
-
-
-
-
-
   }, [cart]);
 
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
 
-
-  const count = cart.reduce(
-    (sum, item) => item.qty > 1 ? sum + 1 : sum + item.qty,
-    0
-  );
-  console.log(count);
-
-  function toggleCheese(id) {
+  function toggleCheese(uniqueId) {
     setCart(prev => prev.map(item =>
-      item.id === id ? { ...item, cheese: !item.cheese } : item
+      item.uniqueId === uniqueId ? { ...item, cheese: !item.cheese } : item
     ))
   }
 
-  function Add(id, title, price) {
-
+  function Add(id, title, price, uniqueId) {
     setCart(prev => {
-      const itemExists = prev.find(item => item.id === id);
-
+      const itemExists = prev.find(item => item.uniqueId === uniqueId);
       if (itemExists) {
         return prev.map(item =>
-          item.id === id
-            ? { ...item, qty: item.qty + 1 }
-            : item
+          item.uniqueId === uniqueId ? { ...item, qty: item.qty + 1 } : item
         );
       } else {
-        return [...prev, { id, title, price, qty: 1, cheese: false }];
+        return [...prev, { id, title, price, uniqueId, qty: 1, cheese: false }];
       }
     });
   }
 
-  function Remove(id) {
-
-
+  function Remove(uniqueId) {
     setCart(prev =>
-      prev
-        .map(item =>
-          item.id === id
-            ? { ...item, qty: item.qty - 1 }
-            : item
+      prev.map(item =>
+          item.uniqueId === uniqueId ? { ...item, qty: item.qty - 1 } : item
         )
         .filter(item => item.qty > 0)
     );
   }
-
-  console.log(cart);
-
-  //   function Add(id, title, price) {
-  //     setCount(count => count + 1)
-
-  //     setCart(prev => {
-  //       const itemExists = prev.find(item => item.id === id);
-
-  //       if (itemExists) {
-  //         // qty increase
-  //         return prev.map(item =>
-  //           item.id === id
-  //             ? { ...item, qty: item.qty + 1 }
-  //             : item
-  //         );
-  //       } else {
-  //         // new item
-  //         return [...prev, { id, title, price, qty: 1 }];
-  //       }
-  //     });
-
-  //   }
-  //    function Remove(id) {
-  // if(count>0){
-  //   setCount(count=>count-1)
-  // }
-
-
-  //     setCart(prev =>
-  //       prev
-  //         .map(item =>
-  //           item.id === id
-  //             ? { ...item, qty: item.qty - 1 }
-  //             : item
-  //         )
-  //         .filter(item => item.qty > 0)
-  //     );
   //   }
   return (
     <>
@@ -157,13 +71,13 @@ function App() {
         </div>
       </div>
 
-      {showCart && (
-        <ViewCart
-          cart={cart}
-
-          onClose={() => setShowCart(false)}
-        />
-      )}
+    {showCart && (
+  <ViewCart
+    cart={cart}
+    onClose={() => setShowCart(false)}
+    Remove={Remove} // Yeh line add karni zaroori hai!
+  />
+)}
 
 
     </>
